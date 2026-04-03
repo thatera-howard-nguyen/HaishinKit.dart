@@ -38,10 +38,10 @@ class HaishinKitPlugin : FlutterPlugin, MethodCallHandler {
     }
 
     fun onDispose(id: Int) {
-        (handlers[id] as? StreamSessionHandler)?.let { handler ->
-            handler.session?.stream?.let {
-                unregisterOutput(it)
-            }
+        val handler = handlers[id] as? StreamSessionHandler
+        val stream = handler?.session?.stream
+        if (stream != null) {
+            unregisterOutput(stream)
         }
         handlers.remove(id)
     }
